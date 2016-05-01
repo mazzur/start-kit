@@ -6,7 +6,7 @@ const
     devServer = require('./devServer');
 
 module.exports = {
-    devtool: 'eval',
+    devtool: 'source-map',
     eslint: {
         failOnError: true
     },
