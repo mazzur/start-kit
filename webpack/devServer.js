@@ -8,6 +8,10 @@ const
 module.exports = {
     contentBase: layout.target.buildDir,
     hot: true,
+    watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+    },
     inline: true,
     progress: true,
     host: HOST,
