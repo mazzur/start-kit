@@ -5,8 +5,7 @@ describe('store', () => {
     let redux,
         reactRouter,
         reactRouterRedux,
-        challenges,
-        categories,
+        reducers,
         storeEnhancers,
         result;
 
@@ -14,7 +13,6 @@ describe('store', () => {
 
         redux = {
             createStore: env.stub().returns({}),
-            combineReducers: env.stub().returns({}),
             applyMiddleware: env.stub().returns({})
         };
 
@@ -23,49 +21,32 @@ describe('store', () => {
         };
 
         reactRouterRedux = {
-            syncHistoryWithStore: env.stub().returns({}),
-            routerReducer: env.stub()
+            syncHistoryWithStore: env.stub().returns({})
         };
 
-        challenges = {
-            default: env.stub()
+        reducers = {
+            default: {}
         };
 
         storeEnhancers = {
-            default: env.stub()
-        };
-
-        categories = {
-            default: env.stub()
+            default: {}
         };
 
         const sut = proxyquire('./store', {
             redux,
             'react-router': reactRouter,
             'react-router-redux': reactRouterRedux,
-            '../reducers/challenges': challenges,
-            '../reducers/categories': categories,
+            '../reducers': reducers,
             './enhancers': storeEnhancers
         }).default;
 
         result = sut();
     });
 
-    it('should combine challenges and routing reducers once', () => {
-        redux.combineReducers.should
-            .calledWith({
-                challenges: challenges.default,
-                routing: reactRouterRedux.routerReducer,
-                categories: categories.default
-            })
-            .and
-            .callCount(1);
-    });
-
-    it('should create store for combined reducer with respective enhancers', () => {
+    it('should create store for reducers with respective enhancers', () => {
         redux.createStore.should
             .calledWith(
-                redux.combineReducers(),
+                reducers.default,
                 storeEnhancers.default
             )
             .and

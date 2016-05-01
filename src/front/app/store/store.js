@@ -1,17 +1,12 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import { hashHistory } from 'react-router';
 import storeEnhancers from './enhancers';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import challenges from '../reducers/challenges';
-import categories from '../reducers/categories';
+import { syncHistoryWithStore } from 'react-router-redux';
+import reducers from '../reducers';
 
 export default () => {
     const state = createStore(
-        combineReducers({
-            challenges,
-            categories,
-            routing: routerReducer
-        }),
+        reducers,
         storeEnhancers
     );
 
